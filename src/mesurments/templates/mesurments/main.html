@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    calculate distance
+{% endblock title %}
+
+
+{% load crispy_forms_tags %}
+{% block content %} 
+    <div class="">
+        <h1 >  Home Page </h1> <br>
+        <p>first view :</p> 
+        <p>{{obj}}</p>
+    </div>
+    <hr>
+    <div class="forms">
+        <form action="" method="post" autocomplete="off">
+            {% csrf_token %}
+            {{form | crispy}} <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock content %}
