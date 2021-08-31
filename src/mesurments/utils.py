@@ -22,4 +22,14 @@ def  get_zom(distance):
         return 8
     elif distance > 100 and distance < 5000 : 
         return 4
-    else: return 2            
+    else: return 2     
+
+def get_ip_addres(request):
+    
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADD') 
+    return ip     
+
