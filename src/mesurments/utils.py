@@ -12,7 +12,7 @@ def get_geo(ip) :
 
 
 def get_center_location(latA, lonA, latB= None, lonB= None):
-    cord = (latA,lonA)
-    if latB & lonB:
-        cord = [(latA)]
+    cord = (latA, lonA)
+    if latB :
+        cord = [(latA+latB)/2, (lonA+lonB)/2]
     return cord
