@@ -61,6 +61,10 @@ def calculate_distance_view(request):
         # distination marker
         folium.Marker([dist_latit,dist_long], tooltip = "click here for more", popup = distination, icon = folium.Icon(color= 'red', icon = 'cloud')).add_to(m)
 
+        #draw line between location and distination
+        folium.PolyLine(locations = [pointA, pointB], weight = 2, color = 'blue').add_to(m)
+
+
         instance.location = location
         instance.distance = distance_
         instance.save()
