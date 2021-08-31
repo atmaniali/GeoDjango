@@ -3,7 +3,8 @@ from .models import Mesurment
 from .forms import MesurmentModelForm
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
-from .utils import get_geo
+from .utils import get_geo, get_center_location
+import folium
 
 # Create your views here.
 
@@ -25,32 +26,49 @@ def calculate_distance_view(request):
     print("city", city)
     print("lat , lon", lat , lon)
     print("### location ", location)
-
+    # location cordinate
     loca_latit = lat
     loca_long = lon
 
     pointA = (loca_latit, loca_long)
 
+    # initiale foluim maps
+    m = folium.Map(width = 800, height = 500, location = get_center_location(loca_latit, loca_long))
+    # location marker
+    folium.Marker([loca_latit,loca_long], tooltip = "click here for more", popup = city['city'], icon = folium.Icon(color= 'purple')).add_to(m)
+
     if form.is_valid():
         instance = form.save(commit = False)
-
         distination_ = form.cleaned_data.get('distination')
         distination = geolocator.geocode(distination_)
 
         print(distination)
 
 
+        # distination cordinate
         dist_latit = distination.latitude
         dist_long = distination.longitude
 
-        pointB = (dist_latit,dist_long)
-
+        pointB = (dist_latit, dist_long)
+        # distance calculated
         distance_ = round(geodesic(pointA, pointB).km, 2)
+
+        # folium mup modification
+        m = folium.Map(width = 800, height = 500, location = get_center_location(loca_latit, loca_long, dist_latit, dist_long))
+        # location marker
+        folium.Marker([loca_latit,loca_long], tooltip = "click here for more", popup = city['city'], icon = folium.Icon(color= 'purple')).add_to(m)
+        # distination marker
+        folium.Marker([dist_latit,dist_long], tooltip = "click here for more", popup = distination, icon = folium.Icon(color= 'red', icon = 'cloud')).add_to(m)
+
         instance.location = location
         instance.distance = distance_
         instance.save()
+
+    m = m._repr_html_()    
+
     # context
     context["obj"] = object
-    context["form"] = form       
+    context["form"] = form   
+    context["maps"] = m    
 
     return render(request, template_name, context)

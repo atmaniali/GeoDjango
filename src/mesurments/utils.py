@@ -9,5 +9,10 @@ def get_geo(ip) :
     city = g.city(ip)
     lat , long = g.lat_lon(ip)
     return cuntry, city, lat, long
-# enddd    
-# ff
+
+
+def get_center_location(latA, lonA, latB= None, lonB= None):
+    cord = (latA,lonA)
+    if latB & lonB:
+        cord = [(latA)]
+    return cord

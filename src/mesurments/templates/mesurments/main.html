@@ -13,6 +13,10 @@
         <p>{{obj}}</p>
     </div>
     <hr>
+    <div>
+        {{maps | safe}}
+    </div>
+    <hr>
     <div class="forms">
         <form action="" method="post" autocomplete="off">
             {% csrf_token %}
