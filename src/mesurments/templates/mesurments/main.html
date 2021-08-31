@@ -7,6 +7,7 @@
 
 {% load crispy_forms_tags %}
 {% block content %} 
+   
     <div class="">
         <h1 >  Home Page </h1> <br>
         <p>first view :</p> 
@@ -14,6 +15,31 @@
     </div>
     <hr>
     <div>
+        <!-- Button trigger modal
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Launch demo modal
+        </button> -->
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Distance to {{distination}} is:</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                {{distance}}
+                </div>
+                <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+            </div>
+            </div>
+        </div>
+        <br>
+        <br>
         {{maps | safe}}
     </div>
     <hr>
@@ -29,4 +55,12 @@
         This product includes GeoLite2 data created by MaxMind, available from
         <a href="https://www.maxmind.com">https://www.maxmind.com</a>.
     </div>
+
+    {% if request.POST and distance is not None %}
+    <script>
+        $(window).on('load', function(){
+            $("#exampleModal").modal('show')
+        })
+    </script>
+    {% endif %}
 {% endblock content %}

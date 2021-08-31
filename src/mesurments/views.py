@@ -12,6 +12,8 @@ def calculate_distance_view(request):
     # initialisation of render
     template_name = 'mesurments/main.html'
     context = {}
+    distance_ = None
+    distination = None
     # methodes
     object = get_object_or_404(Mesurment, id = 1)
     form = MesurmentModelForm(request.POST or None)
@@ -62,7 +64,7 @@ def calculate_distance_view(request):
         folium.Marker([dist_latit,dist_long], tooltip = "click here for more", popup = distination, icon = folium.Icon(color= 'red', icon = 'cloud')).add_to(m)
 
         #draw line between location and distination
-        folium.PolyLine(locations = [pointA, pointB], weight = 2, color = 'blue').add_to(m)
+        folium.PolyLine(locations = [pointA, pointB], weight = 5, color = 'blue').add_to(m)
 
 
         instance.location = location
@@ -74,6 +76,8 @@ def calculate_distance_view(request):
     # context
     context["obj"] = object
     context["form"] = form   
-    context["maps"] = m    
+    context["maps"] = m 
+    context['distance'] = distance_  
+    context['distination'] = distination 
 
     return render(request, template_name, context)
