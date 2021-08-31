@@ -10,3 +10,4 @@ def get_geo(ip) :
     lat , long = g.lat_lon(ip)
     return cuntry, city, lat, long
 # enddd    
+# ff
