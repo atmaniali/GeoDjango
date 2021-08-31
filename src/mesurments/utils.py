@@ -16,3 +16,10 @@ def get_center_location(latA, lonA, latB= None, lonB= None):
     if latB :
         cord = [(latA+latB)/2, (lonA+lonB)/2]
     return cord
+
+def  get_zom(distance):
+    if distance <= 100:
+        return 8
+    elif distance > 100 and distance < 5000 : 
+        return 4
+    else: return 2            

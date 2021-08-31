@@ -3,7 +3,7 @@ from .models import Mesurment
 from .forms import MesurmentModelForm
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
-from .utils import get_geo, get_center_location
+from .utils import (get_geo, get_center_location, get_zom)
 import folium
 
 # Create your views here.
@@ -33,7 +33,7 @@ def calculate_distance_view(request):
     pointA = (loca_latit, loca_long)
 
     # initiale foluim maps
-    m = folium.Map(width = 800, height = 500, location = get_center_location(loca_latit, loca_long))
+    m = folium.Map(width = 800, height = 500, location = get_center_location(loca_latit, loca_long), zoom_start = 100)
     # location marker
     folium.Marker([loca_latit,loca_long], tooltip = "click here for more", popup = city['city'], icon = folium.Icon(color= 'purple')).add_to(m)
 
@@ -53,8 +53,9 @@ def calculate_distance_view(request):
         # distance calculated
         distance_ = round(geodesic(pointA, pointB).km, 2)
 
+        
         # folium mup modification
-        m = folium.Map(width = 800, height = 500, location = get_center_location(loca_latit, loca_long, dist_latit, dist_long))
+        m = folium.Map(width = 800, height = 500, location = get_center_location(loca_latit, loca_long, dist_latit, dist_long), zoom_start = get_zom(distance_))
         # location marker
         folium.Marker([loca_latit,loca_long], tooltip = "click here for more", popup = city['city'], icon = folium.Icon(color= 'purple')).add_to(m)
         # distination marker
